@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>GNU/Linux</title>
+
+		<meta name="description" content="GNU/Linux">
+		<meta name="author" content="Guillaume AMAT">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/theme/night.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<!-- <link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css"> -->
+		<link rel="stylesheet" href="../../bower_components/highlightjs/styles/monokai_sublime.css">
+
+		<style media="screen" type="text/css">
+			.reveal pre code {
+
+				background: #23241F;
+			}
+
+			.hljs-comment {
+
+				color: #aaa;
+			}
+		</style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../bower_components/reveal.js/css/print/pdf.css' : '../../bower_components/reveal.js/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<a href="http://note.inli.org/#p/f4f0ed98">http://note.inli.org/#p/f4f0ed98</a>
+				</section>
+
+				<section>
+					<h1>GNU/Linux</h1>
+				</section>
+
+				<section>
+					<section>
+						<h2>Historique</h2>
+					</section>
+
+					<section>
+						<h3>Début des années 1980</h3>
+						<p>
+							Richard Stallman parle le premier du concept de «&nbsp;logiciel libre&nbsp;»
+						</p>
+					</section>
+
+					<section>
+						<h3>1984 : Création du projet GNU</h3>
+						<p>
+							L'idée est de contruire un OS entier, compatible UNIX,<br>à partir de logiciels libres
+						</p>
+					</section>
+
+					<section>
+						<h3>1986 : Création de la Free Software Foundation</h3>
+						<p>
+							Entité juridique qui permettra de porter<br>le projet GNU et la license GPL
+						</p>
+					</section>
+
+					<section>
+						<h3>Début des années 1990</h3>
+						<p>
+							Tout l'OS est prêt, il ne manque que le noyau
+						</p>
+					</section>
+
+					<section>
+						<h3>1991 : Naissance de Linux</h3>
+						<p>
+							Linus Torvalds publie la première version<br>de ce que deviendra le noyau Linux
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<h2>Logiciel libre</h2>
+					<p class="fragment">
+						4 libertés
+					</p>
+					<ol>
+						<li class="fragment">Exécuter le programme pour n'importe quel usage</li>
+						<li class="fragment">Étudier son fonctionnement</li>
+						<li class="fragment">Le modifier selon ses besoins</li>
+						<li class="fragment">Redistribuer des copies, avec ou sans modifications</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>Gnu/Linux aujourd'hui</h2>
+					<ul>
+						<li class="fragment">Serveurs et super-calculateurs</li>
+						<li class="fragment">Systèmes embarqués civils et militaires</li>
+						<li class="fragment">Ordinateurs de bureau</li>
+						<li class="fragment">Mobiles</li>
+						<li class="fragment">Plusieurs dizaines de distributions</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>And Bobby said: Hello world :)</h2>
+					</section>
+
+					<section>
+						<h3>Arborescence</h3>
+					</section>
+
+					<section>
+						<h3>Bash</h3>
+						<ul>
+							<li class="fragment">Ctrl+d</li>
+							<li class="fragment">Ctrl+a, Ctrl+e, Ctrl+Flêches</li>
+							<li class="fragment">Ctrl+u, Ctrl+k, Alt+Backspace</li>
+							<li class="fragment">Tabulation</li>
+							<li class="fragment">Ctrl+r, history</li>
+							<li class="fragment">!!, !$</li>
+							<li class="fragment">alias</li>
+							<li class="fragment">man, apropos</li>
+							<li class="fragment">PATH</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Utilisateurs</h3>
+						<ul>
+							<li class="fragment">Root in da place</li>
+							<li class="fragment">Whoami?</li>
+							<li class="fragment">Sudo</li>
+							<li class="fragment">w</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Paquets</h3>
+						<ul>
+							<li class="fragment">Debian like : Apt</li>
+							<li class="fragment">Red Hat like : Yum, Dnf</li>
+							<li class="fragment">Arch like : Pacman, Yaourt</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Permissions</h3>
+						<ul>
+							<li class="fragment">Chown</li>
+							<li class="fragment">Chgrp</li>
+							<li class="fragment">Chmod</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Arborescence</h3>
+						<ul>
+							<li class="fragment">cd, cd ~, cd -</li>
+							<li class="fragment">ls</li>
+							<li class="fragment">tree</li>
+							<li class="fragment">ln -s</li>
+							<li class="fragment">du -sh</li>
+							<li class="fragment">df -h</li>
+							<li class="fragment">lsblk</li>
+							<li class="fragment">lsof</li>
+							<li class="fragment">ncdu</li>
+							<li class="fragment">Les fichiers cachés commencent par un point</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Commandes</h3>
+						<ul>
+							<li class="fragment">>, >>, |</li>
+							<li class="fragment">*</li>
+							<li class="fragment">{truc,bidule}</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>« Petits » utilitaires</h3>
+						<ul>
+							<li class="fragment">cat, head, tail</li>
+							<li class="fragment">sort, uniq -u, uniq -d</li>
+							<li class="fragment">wc -l, -m, -w</li>
+							<li class="fragment">awk, cut</li>
+							<li class="fragment">grep, -r, -n, -i, -e, -v</li>
+							<li class="fragment">colorize</li>
+							<li class="fragment">watch</li>
+							<li class="fragment">tar</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>« Petits » utilitaires</h3>
+						<pre><code class="bash">
+cat a b | sort | uniq > c        # c is a union b
+cat a b | sort | uniq -d > c     # c is a intersect b
+cat a b b | sort | uniq -u > c   # c is set difference a - b
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Less, most</h3>
+					</section>
+
+					<section>
+						<h3>Zless, Zcat, Zgrep</h3>
+					</section>
+
+					<section>
+						<h3>Diff, vimdiff</h3>
+					</section>
+
+					<section>
+						<h3>Sed -i</h3>
+					</section>
+
+					<section>
+						<h3>Find, locate, which</h3>
+					</section>
+
+					<section>
+						<h3>Mmv</h3>
+					</section>
+
+					<section>
+						<h3>Processus</h3>
+						<ul>
+							<li class="fragment">Ctrl+c</li>
+							<li class="fragment">Ctrl+z, fg, bg, jobs</li>
+							<li class="fragment">&, nohup</li>
+							<li class="fragment">Kill</li>
+							<li class="fragment">Ps, pstree -p</li>
+							<li class="fragment">Tmux</li>
+							<li class="fragment">Top, htop, glances</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Free, vmstat</h3>
+					</section>
+
+					<section>
+						<h3>Uname -a, lsb_release -a</h3>
+					</section>
+
+					<section>
+						<h3>Ssh, scp, rsync, rsnapshot</h3>
+					</section>
+
+					<section>
+						<h3>Vim</h3>
+					</section>
+
+					<section>
+						<h3>Réseau</h3>
+						<ul>
+							<li class="fragment">ifconfig</li>
+							<li class="fragment">netstat -tnlp, ss -plat, ss -plau</li>
+							<li class="fragment">iftop, nethogs</li>
+							<li class="fragment">nslookup</li>
+							<li class="fragment">traceroute, mtr</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Wget, curl</h3>
+					</section>
+
+					<section>
+						<h3>Wget, curl</h3>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>En vrac</h2>
+					</section>
+
+					<section>
+						<h3>nl</h3>
+					</section>
+
+					<section>
+						<h3>bc</h3>
+					</section>
+
+					<section>
+						<h3>cal</h3>
+					</section>
+
+					<section>
+						<h3>file, stat</h3>
+					</section>
+
+					<section>
+						<h3>time</h3>
+					</section>
+
+					<section>
+						<h3>tac, shuf</h3>
+					</section>
+
+					<section>
+						<h3>iostat</h3>
+					</section>
+
+					<section>
+						<h3>lshw, lscpu, lspci, lsusb, dmidecode</h3>
+					</section>
+				</section>
+
+				<section>
+					<h2>Questions ?</h2>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+		<script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'none', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../bower_components/reveal.js/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>TDD / PHP</title>
+
+		<meta name="description" content="TDD / PHP">
+		<meta name="author" content="Guillaume AMAT">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/theme/night.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<!-- <link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css"> -->
+		<link rel="stylesheet" href="../../bower_components/highlightjs/styles/monokai_sublime.css">
+
+		<style media="screen" type="text/css">
+			.reveal pre code {
+
+				background: #23241F;
+			}
+
+			.hljs-comment {
+
+				color: #aaa;
+			}
+		</style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../bower_components/reveal.js/css/print/pdf.css' : '../../bower_components/reveal.js/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<a href="http://note.inli.org/#p/a6bb311a">http://note.inli.org/#p/a6bb311a</a>
+				</section>
+
+				<section>
+					<h1>TDD / PHP</h1>
+				</section>
+
+				<section>
+					<h2>On parle bien du même PHP&nbsp;?</h2>
+					<ul>
+						<li class="fragment">
+							Créé en 1994
+							<ul>
+								<li>Java et Python : 1990</li>
+								<li>Ruby et JavaScript : 1995</li>
+							</ul>
+						</li>
+						<li class="fragment">PHP signifie : «&nbsp;PHP: Hypertext Preprocessor&nbsp;»</li>
+						<li class="fragment">Langage de programmation open source et libre</li>
+						<li class="fragment">Langage interprété</li>
+						<li class="fragment">Est principalement utilisé pour le web</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>Preprocessor ?</li>
+							<li>Interprété ?</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h2>Ok mais techniquement&nbsp;?</h2>
+					<p class="fragment">
+						PHP sous forme de module Apache :
+					</p>
+					<ol>
+						<li class="fragment">
+							Apache reçoit une requête HTTP(S) :
+							<pre><code class="http request">GET /ma_page.php HTTP/1.1</code></pre>
+						</li>
+						<li class="fragment">Il vérifie l'existence de rewrite (dans vhost ou htaccess)</li>
+						<li class="fragment">Il appelle l'interpréteur en charge de l'extension *.php</li>
+						<li class="fragment">
+							PHP démarre :
+							<ul>
+								<li class="fragment">Vérification de l'OPcache</li>
+								<li class="fragment">Lecture du fichier PHP d'entrée</li>
+							</ul>
+						</li>
+						<li class="fragment">Interprétation du code PHP</li>
+						<li class="fragment">
+							Exécution du code
+							<ul>
+								<li class="fragment">Déclaration du type MIME</li>
+								<li class="fragment">Concaténation de la sortie</li>
+							</ul>
+						</li>
+						<li class="fragment">Retour de la sortie à Apache</li>
+						<li class="fragment">Retour de la sortie au client</li>
+					</ol>
+					<aside class="notes">
+						<ul>
+							<li>En-têtes HTTP ?</li>
+							<li>Version HTTP ?</li>
+							<li>HTTPS, certificats ?</li>
+							<li>OPcache ?</li>
+							<li>Rewrite ?</li>
+							<li>Type MIME</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<section>
+						<h3>Les bases</h3>
+						<pre><code class="php">
+function doThis( $arg = 'Oh' )
+{
+	echo $arg;
+}
+
+doThis();		// 'Oh'
+doThis('yeah!');	// 'yeah!'
+						</code></pre>
+						<aside class="notes">
+							<ul>
+								<li>Juste pour rigoler hein...</li>
+								<li>
+									Mais au cas où...
+									<ul>
+										<li>Différence entre paramètre et argument ?</li>
+										<li>Différence entre simple et double quotes ?</li>
+									</ul>
+								</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Les autres bases</h3>
+						<pre><code class="php">
+$a = $b = 3;
+echo $a;	// ?
+echo $b;	// ?
+
+$b = 4;
+echo $a;	// ?
+echo $b;	// ?
+						</code></pre>
+						<aside class="notes">
+							<ul>
+								<li>Retour : 3334</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Les autres bases</h3>
+						<pre><code class="php">
+$a = 3;
+$b =& $a;
+echo $a;	// ?
+echo $b;	// ?
+
+$a = 4;
+echo $a;	// ?
+echo $b;	// ?
+						</code></pre>
+						<aside class="notes">
+							<ul>
+								<li>Retour : 3334</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Les autres bases</h3>
+						<pre><code class="php">
+$toto = 'truc';
+
+echo ${'toto'};	// ?
+echo $$toto;	// ?
+echo $toto{2};	// ?
+						</code></pre>
+						<aside class="notes">
+							<ol>
+								<li>${'toto'} = $toto</li>
+								<li>$$toto = $truc</li>
+								<li>$toto{2} = 'u'</li>
+							</ol>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Les autres bases</h3>
+						<pre><code class="php">
+$toto = array(2); // ?
+						</code></pre>
+						<aside class="notes">
+							<ul>
+								<li>
+									Tableau d'un élément
+									<ul>
+										<li>clef : 0</li>
+										<li>valeur : 2</li>
+									</ul>
+								</li>
+								<li>Et non pas un tableau avec deux éléments...</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Les autres bases</h3>
+						<ul>
+							<li class="fragment">Encodage par défaut ?</li>
+							<li class="fragment">Comment supprime-t-on une variable ?</li>
+							<li class="fragment">Comment affiche-t-on réellement toutes les erreurs ?</li>
+							<li class="fragment">Qu'est-ce qu'un espace de nom ?</li>
+						</ul>
+						<aside class="notes">
+							<ul>
+								<li>Dépend de la configuration du serveur, mais par défaut ISO-8859-15 puis UTF-8 depuis PHP 5.6</li>
+								<li>unset</li>
+								<li>$a =& $b</li>
+								<li>error_reporting(E_ALL);</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<h3>POO</h3>
+					<pre><code data-trim class="php">
+class Hero
+{
+	private $_name = 'Unknown hero';
+
+	public function __construct($name)
+	{
+		$this->_name = $name;
+	}
+
+	public function fight($enemy)
+	{
+		echo $this->_name .' defeated '. $enemy .'!'. PHP_EOL;
+
+		return true;
+	}
+}
+
+$superman = new Hero('Superman');
+
+$superman->fight('Zod'); // Superman defeated Zod!
+					</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>
+								Où est :
+								<ul>
+									<li>La classe ?</li>
+									<li>L'instance ?</li>
+									<li>La propriété ?</li>
+									<li>La méthode ?</li>
+									<li>La méthode magique ?</li>
+								</ul>
+							</li>
+							<li>À quoi fait référence $this ?</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h3>Quelques conventions</h3>
+					<ul>
+						<li class="fragment">Single quotes</li>
+						<li class="fragment">CamelCase pour le nommage des fonctions/méthodes et variables/propriétés</li>
+						<li class="fragment">Les noms de classes commencent par une majuscule</li>
+						<li class="fragment">Les propriétés privées commencent par un underscore</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h3>SOLID</h3>
+						<p class="fragment">
+							Single responsibility, Open-closed, Liskov substitution, Interface segregation and Dependency inversion
+						</p>
+						<p class="fragment">
+							<a href="https://fr.wikipedia.org/wiki/SOLID_%28informatique%29">Page Wikipedia</a>
+						</p>
+						<ul>
+							<li class="fragment">Se veut être un design pattern</li>
+							<li class="fragment">N'en est pas un</li>
+							<li class="fragment">Euh...</li>
+							<li class="fragment">Lol ?</li>
+						</ul>
+						<aside class="notes">
+							<ul>
+								<li>S : Une seule responsabilité ne veut pas dire grand chose en soit...</li>
+								<li>O : Plus le droit de modifier les classes ? Donc on étend avec des héritages d'héritages d'héritages ?</li>
+								<li>L : Liskov ne devait pas développer d'interface...</li>
+								<li>I : À la bonne heure</li>
+								<li>D : Bon point</li>
+								<li>Prouve bien qu'il ne faut pas prendre pour argent comptant tout ce qui est dit. Esprit critique !</li>
+								<li>Prendre exemple sur les "Voir aussi" de la page Wikipedia. KISS, DRY, MoSCoW, etc. LOL</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<img src="assets/jim_carrey.gif" alt="" />
+						<h3>Design pattern proposal</h3>
+						<p>
+							Ne presser qu'une touche de clavier à la fois<br>pour optimiser son efficacité<br>et améliorer la qualité de votre code.
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<h3>PHPUnit</h3>
+					<p>
+						Installation via Composer (<a href="https://getcomposer.org">https://getcomposer.org</a>)
+					</p>
+					<pre><code class="bash">
+$ composer require phpunit/phpunit
+
+$ composer install
+					</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>Il existe aussi SimpleTest mais plus d'activité depuis 23/01/2012</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<section>
+						<h3>Test-Driven Development</h3>
+						<blockquote>
+							&ldquo;Développer sans tester revient à espérer que le dieu des développeurs assure vos arrières.<br>
+							Vous espérez, pariez, que le programme fonctionne correctement.&rdquo;
+						</blockquote>
+						<aside class="notes">
+							<ul>
+								<li>Ceux qui ne testent pas disent souvent qu'ils n'ont pas le temps, alors qu'ils ont le temps de passer des heures sup' et des nuits à tout vérifier à la main</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Étape 1</h3>
+						<p>
+							Écrire un test qui doit obtenir<br>un résultat défini dans les spécifications
+						</p>
+						<ul>
+							<li class="fragment">Le but est de définir une fonction qui teste «&nbsp;quelque chose&nbsp;» (et uniquement cette chose)</li>
+							<li class="fragment">Il est conseillé de tester uniquement les fonctions publiques</li>
+							<li class="fragment">La fonction appelée n'existe pas encore, <u>le test échoue</u></li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Étape 2</h3>
+						<p>
+							Écrire la fonction manquante,<br>le «&nbsp;quelque chose&nbsp;» à tester, pour faire passer le test
+						</p>
+						<ul>
+							<li class="fragment">Le test réussi</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Étape 3</h3>
+						<p>
+							Ajouter un nouveau test pour obtenir un échec
+						</p>
+						<ul>
+							<li class="fragment">En faisant varier les entrées par exemple</li>
+							<li class="fragment">Ce nouveau test fera <u>échouer</u> la fonction</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Étape 4</h3>
+						<p>
+							Modifier la fonction pour faire passer les tests.
+						</p>
+						<ul>
+							<li class="fragment">Le test réussi</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Étape 5</h3>
+						<p>
+							Revenir à l'étape 3,<br>en éliminant et refactorisant<br>les éventuels redondances dans les tests
+						</p>
+						<ul>
+							<li class="fragment">On refactorise en même temps le code principal et les tests</li>
+							<li class="fragment">L'idée est de tester le plus de cas possibles</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Les trois lois</h3>
+						<ul>
+							<li class="fragment">Ne pas écrire de code s'il n'y a pas de tests qui le couvre</li>
+							<li class="fragment">Ne pas écrire plus de tests qu'il n'en faut pour avoir un échec</li>
+							<li class="fragment">Ne pas écrire plus de code qu'il n'en faut pour avoir un succès</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Étape 1 : Écriture du test</h3>
+						<pre><code class="php">
+class HeroTest extends PHPUnit_Framework_TestCase
+{
+	function testFightAnEnemy()
+	{
+		// Setup
+		$hero = new Hero('Superman');
+
+		// Action
+		$result = $hero->fight('Zod');
+
+		// Assert
+		$this->assertEquals(true, $result);
+	}
+}
+						</code></pre>
+						<ul>
+							<li>Le fichier est placé dans le dossier «&nbsp;tests&nbsp;»</li>
+							<li>Le nom du fichier fini par «&nbsp;Test&nbsp;»</li>
+							<li>Le nom de la classe fini par «&nbsp;Test&nbsp;»</li>
+							<li>Le nom des méthodes de test commencent par «&nbsp;test&nbsp;»</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Étape 2 : Écriture du code</h3>
+						<pre><code class="php">
+class Hero
+{
+	private $_name = 'Unknown hero';
+
+	public function __construct($name)
+	{
+		$this->_name = $name;
+	}
+
+	public function fight($enemy)
+	{
+		echo $this->_name .' defeated '. $enemy .'!'. PHP_EOL;
+
+		return true;
+	}
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Étape 3 : Ajout d'un test</h3>
+						<pre><code class="php">
+function testFightNoOne()
+{
+	$hero = new Hero('Don Quichotte');
+
+	$result = $hero->fight();
+
+	$this->assertEquals(false, $result);
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Étape 4 : Modifier le code</h3>
+						<pre><code class="php">
+public function fight($enemy = null)
+{
+	if ($enemy === null) {
+
+		echo 'Drunk hero here!'. PHP_EOL;
+
+		return false;
+	}
+
+	echo $this->_name .' defeated '. $enemy .'!'. PHP_EOL;
+
+	return true;
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Étape 5 : Revenir à l'étape 3</h3>
+						<p>
+							À vos claviers !
+						</p>
+						<ol>
+							<li>Créez un fichier <u>tests/HeroTest.php</u> contenant la classe <u>HeroTest</u></li>
+							<li>Créez un fichier <u>hero.class.php</u> contenant la classe <u>Hero</u></li>
+							<li>Reproduisez les scénarios vus précédemment</li>
+							<li>Ajouter une gestion du nombre de victoires</li>
+						</ol>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Asserts</h3>
+						<p>
+							Il existe une multitude d'asserts
+						</p>
+						<p>
+							<a href="https://phpunit.de/manual/current/en/appendixes.assertions.html">RTFM</a>
+						</p>
+					</section>
+
+					<section>
+						<h3>Sorties</h3>
+						<pre><code class="php">
+class HeroTest extends PHPUnit_Framework_TestCase
+{
+	function testFightAnEnemy()
+	{
+		$hero = new Hero('Superman');
+
+		$result = $hero->fight('Zod');
+
+		$this->assertEquals(true, $result);
+
+		$this->expectOutputString('Superman defeated Zod!'. PHP_EOL);
+	}
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>setUp et tearDown</h3>
+						<pre><code class="php">
+class HeroTest extends PHPUnit_Framework_TestCase
+{
+	function setUp()
+	{
+		$this->hero = new Hero('Superman');	// Setup
+	}
+
+	function testFightAnEnemy()
+	{
+		$result = $this->hero->fight('Zod');	// Action
+		$this->assertEquals(true, $result);	// Assert
+	}
+
+	function tearDown()
+	{
+		unset($this->hero);
+	}
+}
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Annotations</h3>
+						<p>
+							Il existe, aussi, une multitude d'annotations
+						</p>
+						<p>
+							<a href="https://phpunit.de/manual/current/en/appendixes.annotations.html">RTFM</a>
+						</p>
+					</section>
+
+					<section>
+						<h3>Exceptions</h3>
+						<pre><code class="php">
+public function fight($enemy = null)
+{
+	if ($enemy === null) {
+
+		echo 'Drunk hero here!'. PHP_EOL;
+
+		throw new Exception('You can\'t fight shadows');
+	}
+
+	echo $this->_name .' defeated '. $enemy .'!'. PHP_EOL;
+
+	return true;
+}
+						</code></pre>
+						<pre><code class="php">
+/**
+ * @expectedException        Exception
+ * @expectedExceptionMessage You can't fight shadows
+ */
+function testFightNoOne()
+{
+	$hero = new Hero('Don Quichotte');
+
+	$result = $hero->fight();
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Dépendances</h3>
+						<p>
+							Permettent de rendre les tests dépendants entre eux<br>et de faire transiter des valeurs
+						</p>
+						<pre><code class="php">
+function testFightAnEnemy()
+{
+	$hero = new Hero('Superman');
+
+	$result = $hero->fight('Zod');
+
+	$this->assertEquals(true, $result);
+
+	return $result;
+}
+
+/**
+ * @depends testFightAnEnemy
+ */
+function testLastFight( $lastFightResult )
+{
+	// ...
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Groupes</h3>
+						<p>
+							Permettent de lancer les tests par groupes
+						</p>
+						<pre><code class="php">
+/**
+ * @group core
+ * @group pdo
+ */
+function testThing()
+{
+	// ...
+}
+						</code></pre>
+						<pre><code class="bash">
+$ phpunit --group core
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Processus</h3>
+						<p>
+							Utile pour tester des applications client-serveur par exemple
+						</p>
+						<pre><code class="php">
+/**
+* @runTestsInSeparateProcesses
+*/
+class HeroTest extends PHPUnit_Framework_TestCase
+{
+	// ...
+}
+						</code></pre>
+						<pre><code class="php">
+class HeroTest extends PHPUnit_Framework_TestCase
+{
+	/**
+	 * @runInSeparateProcess
+	 */
+	public function testInSeparateProcess()
+	{
+		// ...
+	}
+}
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Stubs</h3>
+						<p>
+							Un stub est une surcouche d'objet.
+						</p>
+						<p>
+							Imaginez-vous en train de faire un MITM<br>sur les objets qui servent aux tests.
+						</p>
+					</section>
+
+					<section>
+						<h3>Stubs</h3>
+						<pre><code class="php">
+class HeroTest extends PHPUnit_Framework_TestCase
+{
+	public function testStub()
+	{
+		$hero = $this
+		->getMockBuilder('Hero')	// Récupère la classe
+		->disableOriginalConstructor()	// Surcharge
+		->getMock();			// Instanciation
+
+		$hero
+		->expects( $this->once() )	// Nombre d'appels (never, any, etc.)
+		->method('fight')		// Méthode à surcharger
+		->willReturn(true);		// Retournera toujours true
+
+		$this->assertEquals(true, $hero->fight());
+	}
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Exercice n°1</h3>
+						<ol>
+							<li>
+								Créer un test «&nbsp;testIfCanGetTheGirl&nbsp;»
+								<ul>
+									<li>Il s'agit d'appeler une méthode «&nbsp;getTheGirl&nbsp;»</li>
+									<li>Le héro a 1 chance sur 4 de repartir avec la fille</li>
+								</ul>
+							</li>
+							<li>Tester que le héro ait bien la fille</li>
+							<li>Tester que le héro n'ait pas la fille</li>
+						</ol>
+					</section>
+
+					<section>
+						<h3>Exercice n°2</h3>
+						<ol>
+							<li>
+								Créer un test «&nbsp;testIfTheGirlIsAVillain&nbsp;»
+								<ul>
+									<li>Lever une exception si la fille est un super vilain déguisé</li>
+								</ul>
+							</li>
+							<li>Tester l'exception et son message</li>
+						</ol>
+					</section>
+				</section>
+
+					<section>
+						<h3>Exercice n°3</h3>
+						<ol>
+							<li>Ajouter des sorties à tous les retours de méthodes</li>
+							<li>Tester toutes les sorties</li>
+						</ol>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Cas pratique : Les humains</h3>
+					</section>
+
+					<section>
+						<h3>Exercice n°1</h3>
+						<ol>
+							<li>Créer une classe «&nbsp;HumanTest&nbsp;»</li>
+							<li>
+								Créer un test «&nbsp;testIfCanAge&nbsp;»
+								<ul>
+									<li>Il s'agit d'appeler une méthode «&nbsp;age&nbsp;» qui ajoute une année</li>
+								</ul>
+							</li>
+							<li>Tester la valeur par défaut (0) et la valeur après plusieurs incrémentations</li>
+						</ol>
+					</section>
+
+					<section>
+						<h3>Exercice n°2</h3>
+						<ol>
+							<li>
+								Créer un test «&nbsp;testIfCanEat&nbsp;»
+								<ul>
+									<li>Il s'agit d'appeler une méthode «&nbsp;eat&nbsp;» qui affiche la sortie «&nbsp;Yummy!&nbsp;»</li>
+								</ul>
+							</li>
+							<li>Tester la sortie et la valeur retournée</li>
+						</ol>
+					</section>
+
+					<section>
+						<h3>Exercice n°3</h3>
+						<ol>
+							<li>
+								Créer un test «&nbsp;testIfCanBrakeTheLeg&nbsp;»
+								<ul>
+									<li>Il s'agit d'appeler une méthode «&nbsp;brakeTheLeg&nbsp;» qui lève une exception avec pour message «&nbsp;Ouch, my leg!&nbsp;»</li>
+								</ul>
+							</li>
+							<li>Tester l'exception et son message</li>
+						</ol>
+					</section>
+
+					<section>
+						<h3>Exercice n°4</h3>
+						<ol>
+							<li>Créer les classes «&nbsp;BoyTest&nbsp;» et «&nbsp;GirlTest&nbsp;» pour tester les nouvelles classes «&nbsp;Boy&nbsp;» et «&nbsp;Girl&nbsp;» qui héritent de «&nbsp;Human&nbsp;»</li>
+							<li>Ajouter au moins un des tests de HumanTest pour vérifier que l'héritage fonctionne</li>
+						</ol>
+					</section>
+
+					<section>
+						<h3>Exercice n°5</h3>
+						<ol>
+							<li>
+								Pour les filles et les garçons, créer un test «&nbsp;testCanFallInLove&nbsp;»
+								<ul>
+									<li>Il s'agit d'appeler la méthode «&nbsp;fallInLove&nbsp;» avec pour argument une instance du sexe opposé</li>
+									<li>Les garçons ont une chance sur deux de tomber amoureux des filles</li>
+									<li>Les filles ont une chance sur 4 de tomber amoureuses du garçon</li>
+								</ul>
+							</li>
+							<li>Tester que les deux sexes peuvent tomber amoureux</li>
+							<li>Tester que les deux sexes peuvent ne pas tomber amoureux</li>
+						</ol>
+					</section>
+
+					<section>
+						<h3>PubSub Time!</h3>
+						<ol class="fragment">
+							<li>
+								Pour les filles, créer un test «&nbsp;testCanGetPregnant&nbsp;»
+								<ul>
+									<li>Il s'agit d'appeler la méthode «&nbsp;getPregnant&nbsp;» au moment où la fille tombe amoureuse</li>
+								</ul>
+							</li>
+							<li>
+								Pour les garçons, créer un test «&nbsp;testCanBeADaddy&nbsp;»
+								<ul>
+									<li>Via PubSub, appeler la méthode «&nbsp;willBeADaddy&nbsp;» au moment où la fille tombe enceinte</li>
+								</ul>
+							</li>
+						</ol>
+						<aside class="notes">
+							<ul>
+								<li>Faire une démo des PubSub, puis afficher cet exercice</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+		<script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'none', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../bower_components/reveal.js/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

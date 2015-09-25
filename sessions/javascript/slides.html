@@ -1,0 +1,1295 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>TDD / JS</title>
+
+		<meta name="description" content="TDD / JS">
+		<meta name="author" content="Guillaume AMAT">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/theme/night.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<!-- <link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css"> -->
+		<link rel="stylesheet" href="../../bower_components/highlightjs/styles/monokai_sublime.css">
+
+		<style media="screen" type="text/css">
+			.reveal pre code {
+
+				background: #23241F;
+			}
+
+			.hljs-comment {
+
+				color: #aaa;
+			}
+		</style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../bower_components/reveal.js/css/print/pdf.css' : '../../bower_components/reveal.js/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<a href="https://semestriel.framapad.org/p/pi-javascript">https://semestriel.framapad.org/p/pi-javascript</a>
+				</section>
+
+				<section>
+					<h1>TDD / JS</h1>
+				</section>
+
+				<section>
+					<h3>En bref</h3>
+					<ul>
+						<li class="fragment">Créé en 1995 (en 10 jours...) par Brendan Eich pour Netscape</li>
+						<li class="fragment">En 1996, Microsoft réagit en créant le JScript pour IE 3.0</li>
+						<li class="fragment">En 1997, le standard adopté par Ecma International s'appelle désormais ECMAScript</li>
+						<li class="fragment">Langage de programmation open source et libre</li>
+						<li class="fragment">Langage interprété et orienté objet</li>
+						<li class="fragment">Fonctionne en mono-thread</li>
+						<li class="fragment">N'est pas nécessairement lié à un navigateur</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Utilisation actuelle</h3>
+					<p>
+						De nos jours, le JS permet de construire&nbsp;:
+					</p>
+					<ul>
+						<li class="fragment">des sites/applications web (librairies/frameworks, webAPIs)</li>
+						<li class="fragment">des applications serveurs (Node.js)</li>
+						<li class="fragment">des applications mobiles (Firefox OS, IOS, Android)</li>
+						<li class="fragment">des applications de bureau (Gnome, Mac OS, Windows)</li>
+						<li class="fragment">des bases de données (CouchDB)</li>
+						<li class="fragment">des applications embarquées (Pebble, Leap Motion, Oculus Rift)</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Syntaxe de base</h3>
+					<pre><code class="javascript">
+function linkify( selector ) {
+
+	if( supports3DTransforms ) {
+
+		var nodes = document.querySelectorAll( selector );
+
+		for( var i = 0, len = nodes.length; i < len; i++ ) {
+
+			var node = nodes[i];
+
+			if( !node.className ) {
+
+				node.className += ' roll';
+			}
+		}
+	}
+}
+					</code></pre>
+					<ul>
+						<li class="fragment">Pas d'indentation obligatoire</li>
+						<li class="fragment">&laquo; ; &raquo; en fin d'instruction (non-obligatoire)</li>
+						<li class="fragment">&laquo; {} &raquo; pour délimiter les blocs</li>
+						<li class="fragment">&laquo; + &raquo; pour concaténer des chaînes</li>
+						<li class="fragment">&laquo; . &raquo; pour faire appel aux enfants d'objets</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>jQuery</h3>
+					<p>
+						N'est plus du tout obligatoire de nos jours !
+					</p>
+					<p>
+						Mais pour info...
+					</p>
+					<ul>
+						<li class="fragment">Normalise les fonctions usuelles (masque les incompatibilités)</li>
+						<li class="fragment">Facilite l'usage de certaines fonctions</li>
+						<li class="fragment">Ajoute quelques fonctions</li>
+						<li class="fragment">Réalise des traitements sur des éléments DOM</li>
+						<li class="fragment">S'appelle via <u>jQuery</u> ou <u>$</u></li>
+						<li class="fragment">
+							Sélection des éléments DOM par un sélecteur CSS
+							<pre><code class="javascript">
+$('.ma_classe').addClass('mon_autre_classe');
+
+$('#un_id').hide();
+							</code></pre>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h3>Déclaration de variables</h3>
+						<pre><code class="javascript">
+// Portée globale
+foo = 33;
+
+// Disponible dans le bloc courant et ses descendants
+var foo = 33;
+
+// Constante
+const foo = 33;
+
+// Déclaration multiple
+var foo = 33,
+bar = 44;
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Types de variables</h3>
+						<pre><code class="javascript">
+var johnDoe,	// undefined
+chaine		= 'une chaîne',
+entier		= 33,
+flottant	= 123.456,
+booleen		= true,
+
+liste		= ['un', 'deux', 'trois', 33, true],			// object
+json		= {'un': 1, 'deux': 2, 'trois': 3, 'status': false},	// object
+
+func		= function foo(){},	// function
+instance	= new Date(),		// object
+
+wrongNumber	= parseInt('une chaîne'),	// NaN
+tooBig		= 9999999999e+9999999;		// Infinity
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Déclaration par références</h3>
+						<p>
+							Variables classiques : Pas de référence
+						</p>
+						<pre><code class="javascript">
+var myVar = 2,
+secondVar = myVar;
+
+myVar = 4;
+
+console.log(secondVar); // 2
+						</code></pre>
+						<p>
+							Objets : Références
+						</p>
+						<pre><code class="javascript">
+var myObject = {'truc': 'muche'},
+secondObject = myObject;
+
+myObject.truc = 'thing';
+
+console.log(secondObject); // {'truc': 'thing'}
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Quelques conventions</h3>
+						<ul>
+							<li class="fragment">Single quotes</li>
+							<li class="fragment">CamelCase pour le nommage des fonctions et variables</li>
+							<li class="fragment">Les variables privées commencent par un underscore</li>
+							<li class="fragment">Les variables qui contiennent une instance de jQuery commencent par un $</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Scope</h3>
+						<pre><code class="javascript">
+var foo = 'hello';
+
+function test() {
+
+	var bar = 'world';
+
+	console.log(foo, bar);	// 'hello', 'world'
+
+	if( true ) {
+
+		console.log(foo, bar);	// 'hello', 'world'
+	}
+}
+
+console.log(foo, bar);		// 'hello', undefined
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Namespace</h3>
+						<p class="fragment">
+							Il n'y en a pas ;)
+						</p>
+					</section>
+
+					<section>
+						<h3>Pseudo-namespace</h3>
+						<pre><code class="javascript">
+(function () {
+
+	// ...
+
+})()
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Closure</h3>
+						<pre><code data-trim class="javascript">
+function addButtons () {
+
+	var btn;
+
+	for (var i = 1; i <= 5; i++) {
+
+		btn = document.createElement('button');
+		btn.innerHTML = 'Number ' + i;
+
+		btn.onclick = function () {
+
+			console.log(i);
+		};
+
+		document.body.appendChild(btn);
+	}
+}
+
+addButtons();
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Closure</h3>
+						<pre><code data-trim class="javascript">
+function onClick(number) {
+
+	console.log(number);
+}
+
+function addButtons () {
+
+	var btn;
+
+	for (var i = 1; i <= 5; i++) {
+
+		btn = document.createElement('button');
+		btn.innerHTML = 'Number ' + i;
+
+		btn.onclick = onClick.bind(this, i);
+
+		document.body.appendChild(btn);
+	}
+}
+
+addButtons();
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Bind & Call</h3>
+						<pre><code class="javascript">
+function stuff(param1, param2) {
+
+	console.log(param1, param2);
+}
+
+stuff.bind(this, 'A thing', 'Another'); // Renvoit une nouvelle fonction
+
+stuff.call(this, 'A thing', 'Another'); // Exécute la fonction
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Callback hell</h3>
+						<pre><code class="javascript">
+setTimeout(function (param1, param2) {
+
+	console.log(param1, param2);
+}, 1000);
+						</code></pre>
+						<p>
+							devient
+						</p>
+						<pre><code class="javascript">
+function stuff(param1, param2) {
+
+	console.log(param1, param2);
+}
+
+setTimeout( stuff, 1000, param1, param2 );
+// Ou
+setTimeout( stuff.bind( this, param1, param2 ), 1000 );
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Callback hell</h3>
+						<pre><code class="javascript">
+$.ajax({
+
+	'url': 'http://perdu.com',
+	'complete': function (jqXHR, textStatus) {
+
+		console.log(jqXHR, textStatus);
+	},
+	'success': function (data, textStatus, jqXHR) {
+
+		console.log(data, textStatus, jqXHR);
+	},
+	'error': function (jqXHR, textStatus, errorThrown) {
+
+		console.log(jqXHR, textStatus, errorThrown);
+	},
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Callback hell</h3>
+						<p>
+							Devient
+						</p>
+						<pre><code class="javascript">
+function onComplete(jqXHR, textStatus) { //... }
+function onSuccess(data, textStatus, jqXHR) { //... }
+function onError(jqXHR, textStatus, errorThrown) { //... }
+
+$.ajax({
+
+	'url': 'http://perdu.com',
+	'complete': onComplete,
+	'success': onSuccess,
+	'error': onError,
+});
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Promises</h3>
+						<ul>
+							<li>Une promesse permet d'exécuter des actions de façon asynchrone</li>
+							<li>Pas forcément pour des HTTP Requests</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Fonctionnement de base</h3>
+						<pre><code data-trim class="javascript">
+var p = new Promise(function (resolve, reject) {
+
+	setTimeout(function() {
+
+		resolve();
+		// reject();
+	}, 1000);
+});
+
+p.then(function (result) {
+
+	console.log('Yeah!');
+})
+.catch(function () {
+
+	console.error('Woops...');
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Fonctionnement de base</h3>
+						<p>
+							then et catch retournent des Promise, on peut donc les chaîner
+						</p>
+						<pre><code data-trim class="javascript">
+p.then(function( result ) {
+
+	//...
+	return 'une valeur';
+})
+.then(function( result ) {
+
+	// result === 'une valeur'
+	return 'autre valeur';
+})
+.then(function( result ) {
+
+	// result === 'autre valeur'
+	return 'fin';
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Fonctionnement de base</h3>
+						<p>
+							On peut aussi se passer de catch<br>en donnant les deux callback à then
+						</p>
+						<pre><code data-trim class="javascript">
+p.then(sucessCallback, errorCallback);
+
+// Au lieu de
+
+p.then(sucessCallback);
+.catch(errorCallback);
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Exercice</h3>
+						<ol>
+							<li>Créer une promesse qui sera résolue après un setTimeout de deux secondes</li>
+							<li>Lancer un premier callback de résolution</li>
+							<li>Lancer un deuxième callback de résolution</li>
+							<li>Lancer une nouvelle promesse qui sera mise en échec après un setTimeout d'une seconde</li>
+							<li>Lancer un callback d'échec</li>
+						</ol>
+					</section>
+
+					<section>
+						<h3>Promise.all</h3>
+						<p>
+							Permet d'attendre que toutes les promesses aient été résolues
+						</p>
+						<pre><code data-trim class="javascript">
+var p1 = new Promise(function (resolve, reject) {
+
+	resolve('Stuff');
+}),
+p2 = new Promise(function (resolve, reject) {
+
+	resolve('What?');
+});
+
+Promise.all([ p1, p2 ]).then(function (resultList) {
+
+	console.log(resultList); // ['Stuff', 'What?']
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Promise.race</h3>
+						<p>
+							Permet de lancer une action dès qu'une promesse a été résolue
+						</p>
+						<pre><code data-trim class="javascript">
+var p1 = new Promise(function (resolve, reject) {
+
+	setTimeout(resolve, 500, 'One');
+}),
+p2 = new Promise(function (resolve, reject) {
+
+	setTimeout(resolve, 100, 'Two');
+}),
+p3 = new Promise(function (resolve, reject) {
+
+	setTimeout(reject, 100, 'Three');
+});
+
+Promise.race([ p1, p2 ]).then(function (value) {
+
+	console.log( value ); // Two
+});
+Promise.race([ p1, p3 ]).catch(function (value) {
+
+	console.error( value ); // Three
+});
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Tout objet !</h2>
+					</section>
+
+					<section>
+						<h3>Tout objet (bis)</h3>
+						<pre><code class="javascript">
+var Hero = {}; // Objet (non instanciable)
+
+function Hero () { } // Objet (instanciable)
+
+window;
+document;
+Math;
+String;
+// etc
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Polyfill</h3>
+						<p>
+							Tout est objet <u>et</u> on peut <u>tout</u> surcharger !
+						</p>
+						<p>
+							On peut donc ajouter des scripts (polyfill) qui implémentent de nouvelles fonctionnalités
+						</p>
+						<p>
+							Ex : Promises, requestAnimationFrame, etc.
+						</p>
+					</section>
+
+					<section>
+						<h3>Prototype</h3>
+						<pre><code class="javascript">
+function Hero (name) {
+
+	this._name = name;
+
+	this.fight = function (enemy) {
+
+		console.log(this._name +' defeated '+ enemy);
+	}
+}
+
+var hero = new Hero('Superman');
+
+hero.fight('Zod');
+						</code></pre>
+						<p class="fragment">
+							Ce code est valide, mais pas optimal...
+						</p>
+					</section>
+
+					<section>
+						<h3>Prototype</h3>
+						<pre><code class="javascript">
+function Hero (name) {
+
+	this._name = name;
+}
+
+Hero.prototype.fight = function (enemy) {
+
+	console.log(this._name +' defeated '+ enemy);
+}
+
+var hero = new Hero('Superman');
+
+hero.fight('Zod');
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Allons plus loin</h3>
+						<pre><code data-trim class="javascript">
+function Human() {
+
+	this.nom = undefined;
+}
+
+Human.prototype.eat = function () {
+
+	console.log('Yummy!');
+}
+
+function Girl() {}
+function Boy() {}
+
+Girl.prototype = new Human();
+Boy.prototype = new Human();
+
+var linda = new Girl(),
+bob = new Boy();
+
+linda.nom = 'Linda';
+bob.nom = 'Bob';
+						</code></pre>
+						<p class="fragment">
+							Il est maintenant possible<br>d'ajouter des méthodes à Girl et Boy en prototypant Human
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Performances</h2>
+					</section>
+
+					<section>
+						<h3>Chargement</h3>
+						<ul>
+							<li class="fragment">Autant que possible, minifier les fichiers javascript autant que possible</li>
+							<li class="fragment">Activer le mode gzip sur serveur web</li>
+							<li class="fragment">Appeler les fichiers tout en bas de la page HTML</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Utiliser jQuery (et les autres) à bon escient</h3>
+						<p>
+							Qu'amélioreriez-vous dans ce bout de code ?
+						</p>
+						<pre><code class="javascript">
+$('div').each(function() {
+
+	if ( $(this).html() !== '' ) {
+
+		$(this).css('color', 'red');
+	}
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Utiliser jQuery (et les autres) à bon escient</h3>
+						<pre><code class="javascript">
+$('div').each(function() {
+
+	var $this = $(this);
+
+	if ( $this.html() !== '' ) {
+
+		$this.css('color', 'red');
+	}
+});
+						</code></pre>
+						<p>
+							ou encore mieux
+						</p>
+						<pre><code class="javascript">
+$('div').each(function() {
+
+  if ( this.innerHTML !== '' ) {
+
+    this.style.color = 'red';
+  }
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Moteur de rendu</h3>
+						<p>
+							Séparer les lectures et les modifications pour limiter les rendus
+						</p>
+						<pre><code class="javascript">
+var divList = [];
+
+$('div').each(function() {
+
+	if ( this.innerHTML !== '' ) { // Lecture
+
+		divList.push(this);
+	}
+});
+
+divList.forEach( function(div) {
+
+	div.style.color = 'red'; // Modification
+});
+						</code></pre>
+						<p class="fragment">
+							Peut encore être amélioré avec requestAnimationFrame
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Exécution</h2>
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack</h3>
+						<img src="assets/stack1.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack</h3>
+						<img src="assets/stack2.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack</h3>
+						<img src="assets/stack3.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack</h3>
+						<img src="assets/stack4.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack</h3>
+						<img src="assets/stack3.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack</h3>
+						<img src="assets/stack2.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack</h3>
+						<img src="assets/stack1.png" alt="" />
+					</section>
+
+					<section>
+						<h3>Dans un navigateur</h3>
+						<ul>
+							<li class="fragment">
+								Ajout des WebAPI
+								<ul>
+									<li class="fragment">DOM, Document Object Model (variable <u>document</u>)</li>
+									<li class="fragment">Gestionnaire d'évènements</li>
+									<li class="fragment">XMLHttpRequest</li>
+									<li class="fragment">setTimeout/SetInterval</li>
+								</ul>
+							</li>
+							<li class="fragment">Ajout de la variable <u>window</u></li>
+						</ul>
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web1.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web2.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web1.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web3.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web4.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web5.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web6.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web7.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web8.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web7.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web9.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web10.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web11.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web10.png" alt="" />
+					</section>
+
+					<section data-transition="none">
+						<h3>Call stack, event loop & Co</h3>
+						<img src="assets/stack_web1.png" alt="" />
+					</section>
+				</section>
+
+
+				<section>
+					<h3>Jasmine</h3>
+					<p>
+						Installation via NPM (<a href="https://nodejs.org/download">https://nodejs.org/download</a>)
+					</p>
+					<pre><code class="no-highlight">
+# npm install -g jasmine
+
+$ cd mon_projet
+$ jasmine init
+					</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>Il existe aussi QUnit, Mocha, Karma, etc.</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<section>
+						<h3>Test-Driven Development</h3>
+						<blockquote>
+							&ldquo;Développer sans tester revient à espérer que le dieu des développeurs assure vos arrières.<br>
+							Vous espérez, pariez, que le programme fonctionne correctement.&rdquo;
+						</blockquote>
+						<aside class="notes">
+							<ul>
+								<li>Ceux qui ne testent pas disent souvent qu'ils n'ont pas le temps, alors qu'ils ont le temps de passer des heures sup' et des nuits à tout vérifier à la main</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Étape 1</h3>
+						<p>
+							Écrire un test qui doit obtenir<br>un résultat défini dans les spécifications
+						</p>
+						<ul>
+							<li class="fragment">Le but est de définir une fonction qui teste « quelque chose » (et uniquement cette chose)</li>
+							<li class="fragment">Il est conseillé de tester uniquement les fonctions publiques</li>
+							<li class="fragment">La fonction appelée n'existe pas encore, <u>le test échoue</u></li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Étape 2</h3>
+						<p>
+							Écrire la fonction manquante,<br>le « quelque chose » à tester, pour faire passer le test
+						</p>
+						<ul>
+							<li class="fragment">Le test réussi</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Étape 3</h3>
+						<p>
+							Ajouter un nouveau test pour obtenir un échec
+						</p>
+						<ul>
+							<li class="fragment">En faisant varier les entrées par exemple</li>
+							<li class="fragment">Ce nouveau test fera <u>échouer</u> la fonction</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Étape 4</h3>
+						<p>
+							Modifier la fonction pour faire passer les tests.
+						</p>
+						<ul>
+							<li class="fragment">Le test réussi</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Étape 5</h3>
+						<p>
+							Revenir à l'étape 3,<br>en éliminant et refactorisant<br>les éventuels redondances dans les tests
+						</p>
+						<ul>
+							<li class="fragment">On refactorise en même temps le code principal et les tests</li>
+							<li class="fragment">L'idée est de tester le plus de cas possibles</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Les trois lois</h3>
+						<ul>
+							<li class="fragment">Ne pas écrire de code s'il n'y a pas de tests qui le couvre</li>
+							<li class="fragment">Ne pas écrire plus de tests qu'il n'en faut pour avoir un échec</li>
+							<li class="fragment">Ne pas écrire plus de code qu'il n'en faut pour avoir un succès</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Étape 1 : Écriture du test</h3>
+						<pre><code class="javascript">
+describe('Hero', function () {
+
+	var Hero = require('../hero');
+
+	it('fights an enemy', function () {
+
+		var hero = new Hero('Superman'),
+		result = hero.fight('Zod');
+
+		expect(result).toBe(true);
+	});
+});
+						</code></pre>
+						<ul>
+							<li>Le fichier est placé dans le dossier « spec »</li>
+							<li>Le nom du fichier fini par « Spec »</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Étape 2 : Écriture du code</h3>
+						<pre><code class="javascript">
+function Hero(name) {
+
+	this._name = name;
+}
+
+Hero.prototype._name = 'Unknown hero';
+
+Hero.prototype.fight = function (enemy) {
+
+	console.log(this._name +' defeated '+ enemy +'!');
+
+	return true;
+};
+
+module.exports = Hero;
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Étape 3 : Ajout d'un test</h3>
+						<pre><code class="javascript">
+it('fights no one', function () {
+
+	var hero = new Hero('Don Quichotte'),
+	result = hero.fight();
+
+	expect(result).not.toBe(true);
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Étape 4 : Modifier le code</h3>
+						<pre><code class="javascript">
+Hero.prototype.fight = function (enemy) {
+
+	if ( !enemy ) {
+
+		console.warn('Drunk hero here!');
+
+		return false;
+	}
+
+	console.log(this._name +' defeated '+ enemy +'!');
+
+	return true;
+};
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Étape 5 : Revenir à l'étape 3</h3>
+						<p>
+							À vos claviers !
+						</p>
+						<ol>
+							<li>Créez un fichier <u>spec/HeroSpec.js</u> contenant les spécifications</li>
+							<li>Créez un fichier <u>hero.js</u> contenant l'objet <u>Hero</u></li>
+							<li>Reproduisez les scénarios vus précédemment</li>
+							<li>Ajouter une gestion du nombre de victoires</li>
+						</ol>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Matchers</h3>
+						<p>
+							Il existe une multitude de matchers
+						</p>
+						<p>
+							<a href="https://jasmine.github.io/2.3/introduction.html#section-Included_Matchers">RTFM</a>
+						</p>
+						<p class="fragment">
+							Et il est même possible d'en créer des personnalisés
+						</p>
+					</section>
+
+					<section>
+						<h3>Groupes</h3>
+						<p>
+							Faire des groupes revient à encapsuler les blocs dans des «&nbsp;describe&nbsp;»
+						</p>
+						<pre><code class="javascript">
+describe('Hero', function () {
+
+	var Hero = require('../hero');
+
+	describe('Groupe 1', function () {
+
+		it('fights an enemy', function () {
+
+			var hero = new Hero('Superman'),
+			result = hero.fight('Zod');
+
+			expect(result).toBe(true);
+		});
+	});
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>setUp et tearDown</h3>
+						<p>
+							beforeEach, afterEach, beforeAll et afterAll
+						</p>
+						<pre><code class="javascript">
+describe('A spec using beforeEach and afterEach', function() {
+
+	var foo = 0;
+
+	beforeEach(function() {
+
+		foo += 1;
+	});
+
+	afterEach(function() {
+
+		foo = 0;
+	});
+
+	it('is just a function, so it can contain any code', function() {
+
+		expect(foo).toEqual(1);
+	});
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Asynchrone</h3>
+						<pre><code data-trim class="javascript">
+describe('long asynchronous specs', function() {
+
+	beforeEach(function(done) {
+
+		setTimeout(function() {
+
+			// Préparation de variables, etc.
+			// Le test ne démarre pas tant que done n'est pas appelé
+			done();
+		}, 500);
+	}, 1000);
+
+	it('takes a long time', function(done) {
+
+		setTimeout(function() {
+
+			expect(true).toBe(true);
+			done(); // Met fin au test
+		}, 5000);
+	}, 10000); // Timeout (5 secondes par défaut)
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Spies</h2>
+					</section>
+
+					<section>
+						<h3>toHaveBeenCalled</h3>
+						<pre><code data-trim class="javascript">
+describe('A spy', function() {
+
+	var foo, bar = null;
+
+	beforeEach(function() {
+		foo = {
+			setBar: function(value) {
+				bar = value;
+			}
+		};
+
+		spyOn(foo, 'setBar');
+		foo.setBar(123);
+		foo.setBar(456, 'another param');
+	});
+
+	it('tracks that the spy was called', function() {
+		expect(foo.setBar).toHaveBeenCalled();
+	});
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>toHaveBeenCalled</h3>
+						<pre><code data-trim class="javascript">
+describe('A spy', function() {
+
+	var foo, bar = null;
+
+	beforeEach(function() {
+		foo = {
+			setBar: function(value) {
+				bar = value;
+			}
+		};
+
+		spyOn(foo, 'setBar');
+		foo.setBar(123);
+		foo.setBar(456, 'another param');
+	});
+
+	it('tracks all the arguments of its calls', function() {
+		expect(foo.setBar).toHaveBeenCalledWith(123);
+		expect(foo.setBar).toHaveBeenCalledWith(456, 'another param');
+	});
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>toHaveBeenCalled</h3>
+						<pre><code data-trim class="javascript">
+describe('A spy', function() {
+
+	var foo, bar = null;
+
+	beforeEach(function() {
+		foo = {
+			setBar: function(value) {
+				bar = value;
+			}
+		};
+
+		spyOn(foo, 'setBar');
+		foo.setBar(123);
+		foo.setBar(456, 'another param');
+	});
+
+	it('stops all execution on a function', function() {
+		expect(bar).toBeNull();
+	});
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>and.returnValue</h3>
+						<pre><code data-trim class="javascript">
+describe('A spy, when configured to fake a return value', function() {
+
+	var foo, bar = 123;
+
+	beforeEach(function() {
+		foo = {
+			getBar: function() {
+				return bar;
+			}
+		};
+
+		spyOn(foo, 'getBar').and.returnValue(745);
+	});
+
+	it('when called returns the requested value', function() {
+		expect(foo.getBar()).toEqual(745);
+	});
+});
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>and.callFake</h3>
+						<pre><code data-trim class="javascript">
+describe('A spy, when configured with an alternate implementation', function() {
+
+	var foo, bar = 123;
+
+	beforeEach(function() {
+		foo = {
+			getBar: function() {
+				return bar;
+			}
+		};
+
+		spyOn(foo, 'getBar').and.callFake(function() {
+			return 1001;
+		});
+	});
+
+	it('when called returns the requested value', function() {
+		expect(foo.getBar()).toEqual(1001);
+	});
+});
+						</code></pre>
+					</section>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+		<script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'none', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../bower_components/reveal.js/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

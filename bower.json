@@ -1,0 +1,14 @@
+{
+  "name": "formation-pi",
+  "private": true,
+  "version": "0.0.0",
+  "homepage": "https://github.com/GuillaumeAmat/formation-pi",
+  "authors": [
+    "Guillaume AMAT <guillaume@amat.io>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "highlightjs": "~8.7.0",
+    "reveal.js": "~3.1.0"
+  }
+}

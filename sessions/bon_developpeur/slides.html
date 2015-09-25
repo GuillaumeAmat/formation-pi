@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Évoluer en PHP et Javascript</title>
+
+		<meta name="description" content="Évoluer en PHP et Javascript">
+		<meta name="author" content="Guillaume AMAT">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/theme/night.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<!-- <link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css"> -->
+		<link rel="stylesheet" href="../../bower_components/highlightjs/styles/monokai_sublime.css">
+
+		<style media="screen" type="text/css">
+			.reveal pre code {
+
+				background: #23241F;
+			}
+
+			.hljs-comment {
+
+				color: #aaa;
+			}
+		</style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../bower_components/reveal.js/css/print/pdf.css' : '../../bower_components/reveal.js/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<a href="http://note.inli.org/#p/dc094b16">http://note.inli.org/#p/dc094b16</a>
+					<aside class="notes">
+						<ul>
+							<li>Je suis Guillaume AMAT</li>
+							<li>on va passer la semaine ensemble : je rappelle le planning</li>
+							<li>Ce matin on est là pour échanger des pratiques, libres à vous de vous les approprier ou non</li>
+							<li>Je vais vous montrer mes outils, mes méthodes de travail, etc.</li>
+							<li>Cet après-midi on attaque PHP avec le premier group</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h1>Êtes-vous<br>un bon développeur&nbsp;?</h1>
+					<aside class="notes">
+						<ul>
+							<li>Qui est content de ses outils ?</li>
+							<li>Qui ne l'est pas ?</li>
+							<li>Qui a déjà lu le code source d'un logiciel/module/framework/librairies/etc ?</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<h2>Est-ce difficile d'être<br>un bon développeur&nbsp;?</h2>
+					<aside class="notes">
+						Débat mouvant
+					</aside>
+				</section>
+
+				<!-- Fausse définition -->
+				<section>
+					<section>
+						<h2>Qu'est-ce qu'un<br>bon développeur<br>?</h2>
+						<ol>
+							<li class="fragment">Est brillant</li>
+							<li class="fragment">Résout tous les problèmes facilement</li>
+							<li class="fragment">N'utilise pas de technos dépassées</li>
+							<li class="fragment">Maîtrise toutes les technos à la mode</li>
+							<li class="fragment">Connaît donc toutes les docs par cœur</li>
+							<li class="fragment">Pond 10 projets innovants par mois</li>
+							<li class="fragment">A des milliers de followers sur Github et Twitter</li>
+							<li class="fragment">Autre ?</li>
+						</ol>
+						<aside class="notes">
+							<ul>
+								<li>Fausse définition</li>
+								<li>Résultat d'une intense enquête, il faut être tout ça à la fois</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h2>Bulls**t</h2>
+						<aside class="notes">
+							...
+						</aside>
+					</section>
+
+					<section>
+						<h2>Qu'est-ce qu'un<br>bon développeur<br>?</h2>
+						<aside class="notes">
+							<ul>
+								<li>On peut utiliser une image pour s'en rendre compte plus facilement</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h2>Qu'est-ce qu'un<br><s>bon développeur</s><br>super-héro<br>?</h2>
+						<aside class="notes">
+							<ul>
+								<li>Statistiquement, vous êtes des geeks</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h2>Super-héro guidelines</h2>
+						<ol>
+							<li class="fragment">Être un dieu (demi-dieu toléré)</li>
+							<li class="fragment">Avoir des super-pouvoirs (innés ou obtenus accidentellement)</li>
+							<li class="fragment">Être ultra-riche (et adorer les goodies à son image)</li>
+						</ol>
+						<aside class="notes">
+							<ul>
+								<li>Autre grosse enquête</li>
+								<li>Seulement si c'était vrai Batman, Superman, Thor, Daredevil, Hulk et les autres ne seraient pas des super-héros</li>
+								<li>Ils ne sont pas tout à la fois</li>
+								<li>On peut aussi utiliser l'image du joueur de foot qui est bon défenseur ou attaquant (que dire des gardiens)</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+
+				<!-- Véritable définition -->
+				<section>
+					<section>
+						<h1>La vérité vraie sur ce qu'est un bon développeur</h1>
+						<aside class="notes">
+							<ul>
+								<li>Ce que je vais dire ne concerne que moi</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>3 grands axes</h3>
+						<ol>
+							<li class="fragment">Outils</li>
+							<li class="fragment">Personnalité</li>
+							<li class="fragment">Mise en œuvre</li>
+						</ol>
+					</section>
+				</section>
+
+				<!-- Outils -->
+				<section>
+					<section>
+						<h2>Outils</h2>
+						<ul>
+							<li class="fragment">Navigateur avec devtools</li>
+							<li class="fragment">Éditeur de code</li>
+							<li class="fragment">
+								Terminal
+								<ul>
+									<li class="fragment">Gestionnaire de version</li>
+									<li class="fragment">Gestionnaire des dépendances</li>
+									<li class="fragment">Pré-processeurs</li>
+									<li class="fragment">Vérification de code</li>
+								</ul>
+							</li>
+							<li class="fragment">Machine(s) virtuelle(s)</li>
+							<li class="fragment">Documentation</li>
+							<li class="fragment">Communauté</li>
+						</ul>
+						<aside class="notes">
+							<ul>
+								<li>Navigateur : multi-profil (surf, dev, test)</li>
+								<li>Éditeur de code : Atom</li>
+								<li>
+									Terminal : Cmder, Tmux, Tmuxinator
+									<ul>
+										<li>Gestionnaire de version : Hooks, blame, Git Flow</li>
+										<li>Gestionnaire des dépendances : Bower, Npm</li>
+										<li>Pré-processeurs : Less, Babel</li>
+										<li>Vérification de code : Linter, JSHint, php -l</li>
+									</ul>
+								</li>
+								<li>Machine(s) virtuelle(s) : Michu style</li>
+								<li>Documentation : Si pas dans les autres outils, première source d'information !</li>
+								<li>Communauté : Après avoir cherché !</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+
+				<!-- Personnalité -->
+				<section>
+					<section>
+						<img src="assets/use_your_brain.jpg" alt="" />
+						<h2>Personnalité</h2>
+					</section>
+
+					<section>
+						<h3>Règle n°1</h3>
+						<p class="fragment">
+							Aimer son job
+						</p>
+						<aside class="notes">
+							<ul>
+								<li>Mais ça n'empêche pas d'être feignant au contraire !</li>
+								<li>Un bon développeur EST feignant... et malin !</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<img src="assets/using_tar.jpg" alt="" />
+						<h3>Règle n°2</h3>
+						<p class="fragment">
+							Assumer de ne pas tout savoir
+						</p>
+						<aside class="notes">
+							<ul>
+								<li>C'est normal !</li>
+								<li>Personne n'est parfait, pour ma part je ne sais pas tout</li>
+								<li>Celui qui dit le contraire est un menteur</li>
+								<li>Ne pas se dévaloriser pour autant</li>
+								<li>Ne pas se cacher derrière du jargon technique et/ou marketing ou des trolls</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<img src="assets/offend_geeks.jpg" alt="" />
+						<h3>Règle n°3</h3>
+						<p class="fragment">
+							Avoir un esprit critique <u class="fragment">contructif</u>
+						</p>
+						<aside class="notes">
+							<ul>
+								<li>Ne pas copier/coller bêtement des bouts de code et tester ce qu'on récupère</li>
+								<li>Ne pas confondre influence et inspiration</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Règle n°4</h3>
+						<p class="fragment">
+							Être curieux !
+						</p>
+						<aside class="notes">
+							<ul>
+								<li>Ne pas hésiter à mettre le nez dans le code source d'autres projets</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+
+				<!-- Mise en œuvre -->
+				<section>
+					<section>
+						<h2>Mise en œuvre</h2>
+					</section>
+
+					<section>
+						<img src="assets/brocoli.jpg" alt="" />
+						<h3>Utiliser les outils à bon escient</h3>
+						<p>
+							Même quand vous ne les aimez pas...
+						</p>
+						<aside class="notes">
+							<ul>
+								<li>Tous les outils ont des défauts (soyons honnêtes ;) )</li>
+								<li>Il n'existe pas d'outil unique. Il y a des outils pour des usages/besoins/contraintes</li>
+								<li>Détourner un outil de sa fonction première vont peut-être faire gagner du temps au début mais le résultat peut être catastrophique (MAJ qui casse tout)</li>
+								<li>Ne pas adopter une techno pour la seule raison qu'elle est nouvelle</li>
+								<li>Ne pas adopter un outil parce qu'il semble magique. Le jour où il faut sortir du cadre ce'st le cauchemar</li>
+								<li>
+									Les critères de choix peuvent être
+									<ul>
+										<li>La pérennité</li>
+										<li>Les performances</li>
+										<li>La sécurité</li>
+										<li>Le temps de développement</li>
+										<li>etc.</li>
+									</ul>
+								</li>
+								<li>Les trolls sont vos pires ennemis</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Faire de la veille</h3>
+						<aside class="notes">
+							<ul>
+								<li>Flux RSS</li>
+								<li>C'est le seul moyen de toujours être au courant et de ne pas perdre de temps pour la règle n°1</li>
+								<li>Les nouvelles fonctionnalités corrigent des problèmes que vous avez rencontré et comblent les manquent de fonctionnalités</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Expérimenter</h3>
+						<aside class="notes">
+							<ul>
+								<li>
+									Ne pas passer trop de temps
+									<ul>
+										<li>Jeter les éléments dans une page web et c'est tout</li>
+										<li>Installer le soft rapidement ou dans une VM</li>
+									</ul>
+								</li>
+								<li>C'est le seul moyen de confirmer l'utilité des technos</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Faire évoluer ses techniques</h3>
+						<aside class="notes">
+							<ul>
+								<li>
+									Qui utilise toujours les HTML entities dans le rendu des pages HTML ?
+									<ul>
+										<li>Inutile si en UTF-8</li>
+										<li>Incompatibles avec tous les autres modes de rendu (PDF, modales Javascript, etc.)</li>
+									</ul>
+								</li>
+								<li>Qui n'utilise pas les namespaces ?</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<img src="assets/design_vs_ux.jpg" alt="" />
+						<h3>Prendre du recul</h3>
+						<aside class="notes">
+							<ul>
+								<li>Ne pas être piégé dans sa vision de développeur</li>
+								<li>Se placer du point de vue de l'utilisateur final, du prochain développeur qui reprendra votre code, etc.</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<img src="assets/better_rtfm.jpg" alt="" />
+						<h3>RTFM + Make the better FM</h3>
+						<aside class="notes">
+							<ul>
+								<li>Toutes les réponses sont là, sauf bug...</li>
+								<li>Ça veut aussi dire d'écrire des commentaires utiles</li>
+								<li>Et pourquoi pas de générer de la documentation automatiquement</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Coder moins pour coder mieux</h3>
+						<aside class="notes">
+							<ul>
+								<li>Philosophie Unix</li>
+								<li>Single responsability</li>
+								<li>Avoir un minimum de dépendances</li>
+								<li>MVC</li>
+								<li>etc.</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Respecter les conventions</h3>
+						<aside class="notes">
+							<ul>
+								<li>
+									Ça comprend
+									<ul>
+										<li>Indentation</li>
+										<li>Nommage des variables</li>
+										<li>Structures de l'arborescence</li>
+									</ul>
+								</li>
+								<li>Les développeurs les plus reconnus écrivent quasiment tous du code lisible et élégant</li>
+								<li>Le code est beaucoup plus facile à lire, à déchiffrer et donc à s'approprier</li>
+								<li>Il suffit en grande partie de bien configurer son éditeur de code</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<h3>Être un bon développeur<br>est juste une question d'attitude</h3>
+					<p>
+						Pas besoin d'être un génie...
+					</p>
+					<p>
+						Et personne n'est à l'abri d'avoir de bonnes idées ;)
+					</p>
+				</section>
+
+				<section>
+					<img src="assets/harlem_shake.gif" alt="" />
+					<h3>Questions ?</h3>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+		<script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'none', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../bower_components/reveal.js/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
