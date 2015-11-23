@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Docker</title>
+
+		<meta name="description" content="Docker">
+		<meta name="author" content="Guillaume AMAT">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../../bower_components/reveal.js/css/theme/night.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<!-- <link rel="stylesheet" href="../../bower_components/reveal.js/lib/css/zenburn.css"> -->
+		<link rel="stylesheet" href="../../bower_components/highlightjs/styles/monokai_sublime.css">
+
+		<style media="screen" type="text/css">
+			.reveal pre code {
+
+				background: #23241F;
+			}
+
+			.hljs-comment {
+
+				color: #aaa;
+			}
+		</style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../bower_components/reveal.js/css/print/pdf.css' : '../../bower_components/reveal.js/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../../bower_components/reveal.js/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<a href="https://mensuel.framapad.org/p/pi-docker">https://mensuel.framapad.org/p/pi-docker</a>
+				</section>
+
+				<section>
+					<h1>Docker</h1>
+				</section>
+
+				<section>
+					<h2>Tout le mond<br>est bien installé&nbsp;?</h2>
+					<p>
+						Lancez vos pull d'images maintenant&nbsp;!
+					</p>
+				</section>
+
+				<section>
+					<h2>Conteneur<br>≠<br>Machine virtuelle</h2>
+				</section>
+
+				<section>
+					<h2>Conteneur<br>≠<br>Image</h2>
+				</section>
+
+				<section>
+					<h2>Commandes de base</h2>
+					<ul>
+						<li class="fragment">pull</li>
+						<li class="fragment">images</li>
+						<li class="fragment">run</li>
+						<li class="fragment">start/stop</li>
+						<li class="fragment">ps</li>
+						<li class="fragment">rm et rmi</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Intéragir avec un conteneur</h2>
+					<pre><code class="bash">
+# docker exec -it containerName bash
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Volumes</h2>
+				</section>
+
+				<section>
+					<h2>Link</h2>
+				</section>
+
+				<section>
+					<h2>Ports &amp; Expose</h2>
+				</section>
+
+				<section>
+					<h2>Créer de nouvelles images</h2>
+					<ul>
+						<li class="fragment">commit</li>
+						<li class="fragment">Dockerfile</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Automatiser les stacks</h2>
+					<p class="fragment">Docker Compose</p>
+				</section>
+
+				<section>
+					<h2>Politique de redémarrage</h2>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="../../bower_components/reveal.js/lib/js/head.min.js"></script>
+		<script src="../../bower_components/reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'none', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../../bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../bower_components/reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../bower_components/reveal.js/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
